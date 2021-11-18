@@ -1,2 +1,1 @@
-# AdvancedNodeStarter
-Starting project for a course on Advanced Node @ Udemy
+Using redis for simple caching on a old project
