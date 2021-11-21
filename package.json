@@ -3,13 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "jest": {
+    "setupFilesAfterEnv": [
+      "./tests/setup.js"
+    ]
+  },
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js --ignore tests",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -21,12 +27,14 @@
     "dotenv": "^10.0.0",
     "express": "^4.15.3",
     "jest": "^27.3.1",
+    "keygrip": "^1.1.0",
     "migrate-mongoose": "^4.0.0",
     "mongoose": "^6.0.13",
     "nodemon": "^2.0.15",
     "passport": "^0.3.2",
     "passport-google-oauth20": "^2.0.0",
     "path-parser": "^2.0.2",
+    "puppeteer": "^11.0.0",
     "redis": "^3.1.2",
     "uuid": "^3.2.1"
   }
