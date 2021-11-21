@@ -27,8 +27,46 @@ class CustomPage {
     await this.page.goto("http://localhost:3000/blogs");
     await this.page.waitForSelector("a[href='/auth/logout'");
   }
+
+  get(path) {
+    return this.page.evaluate((_path) => {
+      return fetch(_path, {
+        method: "GET",
+        credentials: "same-origin",
+        headers: {
+          "Content-type": "application/json",
+        },
+      }).then((res) => res.json());
+    }, path);
+  }
+
+  post(path, data) {
+    this.page.evaluate(
+      (_path, _data) => {
+        return fetch(_path, {
+          method: "POST",
+          credentials: "same-origin",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(_data),
+        }).then((res) => res.json());
+      },
+      path,
+      data
+    );
+  }
+
   async getContentsOf(selector) {
     return await this.page.$eval(selector, (el) => el.innerHTML);
+  }
+
+  executeRequests(actions) {
+    return Promise.all(
+      actions.map(({ method, path, data }) => {
+        return this[method](path, data);
+      })
+    );
   }
 }
 
